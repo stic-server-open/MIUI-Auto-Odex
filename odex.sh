@@ -1,5 +1,5 @@
 #!/bin/bash
-# MIUI ODEX项目贡献者：柚稚的孩纸(zjw2017) 雄氏老方(DavidPisces)
+# MIUI ODEX项目贡献者：柚稚的孩纸(zjw2017) 雄氏老方(DavidPisces) 水龙(Amktiao)
 nowversion=4.44
 workfile=/storage/emulated/0/MIUI_odex
 success_count=0
@@ -16,6 +16,7 @@ mkdir -p /storage/emulated/0/MIUI_odex/app
 mkdir -p /storage/emulated/0/MIUI_odex/priv-app
 mkdir -p /storage/emulated/0/MIUI_odex/product/app
 mkdir -p /storage/emulated/0/MIUI_odex/product/priv-app
+mkdir -p /storage/emulated/0/MIUI_odex/vendor/app
 # log
 touch $workfile/log/MIUI_odex_$now_time.log
 
@@ -33,7 +34,7 @@ echo "*************************************************"
 echo -e "\n- 您希望以什么模式编译Odex\n"
 echo "[1] Simple (耗时较少,占用空间少，仅编译重要应用)"
 echo "[2] Complete (耗时较长，占用空间大，完整编译)"
-echo "[3] Skip ODEX 不进行ODEX编译"
+echo "[3] Skip ODEX 不进行Odex编译"
 echo "[4] Update From Github 从Github更新脚本"
 echo "[5] Update From Gitee 从Gitee更新(国内源)"
 echo "[6] Quit 退出"
@@ -44,7 +45,7 @@ clear
 # Update Mode 1
 if [ $choose_odex == 4 ] ; then
 # Github Raw
-  echo "- 正在查询Github最新版本，请坐和放宽"
+  echo "- 正在查询Github最新版本，请耐心等待..."
   curl -s -o version https://raw.githubusercontent.com/DavidPisces/MIUI-Auto-Odex/master/version
   latestversion=$(cat version)
   latestshname="odex.sh"
@@ -59,7 +60,7 @@ if [ $choose_odex == 4 ] ; then
 	  read choose_update
 	  clear
 	  if [ $choose_update == "y" ] ;then
-	     echo "- 正在下载更新，请坐和放宽"
+	     echo "- 正在下载更新，请耐心等待..."
 	     curl -s -o odex$latestversion.sh $latesturl
 		 clear
          if [ $? -eq 0 ]; then
@@ -85,7 +86,7 @@ if [ $choose_odex == 4 ] ; then
 	  read choose_update
 	  clear
 	  if [ $choose_update == "y" ] ;then
-	     echo "- 正在下载更新，请坐和放宽"
+	     echo "- 正在下载更新，请耐心等待..."
 	     curl -s -o odex$latestversion.sh $latesturl
 		 clear
          if [ $? -eq 0 ]; then
@@ -110,7 +111,7 @@ fi
 # Update Mode 2
 if [ $choose_odex == 5 ] ; then
 # Gitee Raw
-  echo "- 正在查询Gitee最新版本，请坐和放宽"
+  echo "- 正在查询Gitee最新版本，请耐心等待..."
   curl -s -o version https://gitee.com/David-GithubClone/MIUI-Auto-Odex/raw/master/version
   latestversion=$(cat version)
   latestshname="odex.sh"
@@ -125,7 +126,7 @@ if [ $choose_odex == 5 ] ; then
 	  read choose_update
 	  clear
 	  if [ $choose_update == "y" ] ;then
-	     echo "- 正在下载更新，请坐和放宽"
+	     echo "- 正在下载更新，请耐心等待..."
 	     curl -s -o odex$latestversion.sh $latesturl
 		 clear
          if [ $? -eq 0 ]; then
@@ -151,7 +152,7 @@ if [ $choose_odex == 5 ] ; then
 	  read choose_update
 	  clear
 	  if [ $choose_update == "y" ] ;then
-	     echo "- 正在下载更新，请坐和放宽"
+	     echo "- 正在下载更新，请耐心等待..."
 	     curl -s -o odex$latestversion.sh $latesturl
 		 clear
          if [ $? -eq 0 ]; then
@@ -220,6 +221,7 @@ else
           cp -r /system/priv-app/* $workfile/priv-app
           cp -r /system/product/app/* $workfile/product/app
           cp -r /system/product/priv-app/* $workfile/product/priv-app
+          cp -r /system/vendor/app/* $workfile/vendor/app
           echo "- 文件复制完成，开始执行"
 	      odex_module=true
 		fi
